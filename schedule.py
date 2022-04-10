@@ -49,11 +49,12 @@ for i in sectionIDs:
 
 finalMapURL = "https://www.google.com/maps/dir/"
 
+
 for i in sectionCoords:
     finalMapURL = finalMapURL + str(sectionCoords[i]) + "/"
 
 
-# st.write("check out this [link]" + "(" + finalMapURL + ")")
+st.write("Click this [link]" + "(" + finalMapURL + ")" + " or check out the interactive map below")
 # output = comp.iframe(finalMapURL, 10, 10, True)
 # st.write(output)
 
