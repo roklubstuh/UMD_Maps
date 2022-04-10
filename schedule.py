@@ -1,4 +1,7 @@
+from codecs import lookup_error
 from collections import namedtuple
+from inspect import Traceback
+from traceback import TracebackException
 import streamlit.components.v1 as comp
 import altair as alt
 import math
@@ -9,6 +12,7 @@ import requests
 from pprint import pprint
 from datetime import datetime as dt
 import json
+
 
 def buildingToCoords(code):
     building = "https://api.umd.io/v1/map/buildings/" + code
@@ -26,20 +30,24 @@ def coordsToMap(startCoords, endCoords):
     return googleInput
 
 st.header("UMD MAPS 2.0")
+
 sectionCount = st.number_input("How many sections would you like to input?", 1)
 
 sectionIDs = []
 # all_classes = requests.get("https://api.umd.io/v1/map/buildings").json()
 
 for i in range(sectionCount):
-    
-    sectionIDs.append(st.text_input("Please input your section ID", key = i))
+    try:
+        sectionIDs.append(st.text_input("Please input your section ID IN ALL CAPS ", key = i))
+    except KeyError:
+        pass
 
 sectionCoords = {}
+
 for i in sectionIDs:
     currentURL = "https://api.umd.io/v1/courses/sections/" + i
     curr = requests.get(currentURL).json()
-  
+
     currentBuildingCode = curr[0]['meetings'][0]['building']
 
     sectionCoords[i] = (buildingToCoords(currentBuildingCode))
